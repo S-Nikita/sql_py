@@ -28,8 +28,6 @@ create table if not exists genres (
 -- Создание таблицы с информацией о сборниках
 create table if not exists mixtapes (
 	mixtape_id integer,
-	track_id integer,
-	album_id integer,
 	title varchar(100),
 	release_year integer
 );
@@ -46,6 +44,12 @@ create table if not exists GenresArtists (
 	artist_id integer
 );
 
+-- Создание дополнительной таблицы с информацией о Сборниках и Трэках
+create table if not exists mixtapestracks (
+	mixtape_id integer,
+	track_id integer
+);
+
 -- Создание внешнего ключа ссылающегося на таблицу albums
 alter table tracks
 add foreign key (album_id) references albums (album_id);
@@ -53,12 +57,6 @@ add foreign key (album_id) references albums (album_id);
 -- Создание ключей для таблицы mixtapes
 alter table mixtapes
 add primary key (mixtape_id, track_id, album_id);
-
-alter table mixtapes
-add FOREIGN key(track_id) references tracks(track_id);
-
-alter table mixtapes
-add FOREIGN key(album_id) references albums(album_id);
 
 -- Создание ключей для таблицы ArtistsAlbums
 alter table artistsalbums
@@ -79,3 +77,13 @@ add FOREIGN key(artist_id) references artists(artist_id);
 
 alter table genresartists
 add FOREIGN key(genre_id) references genres(genre_id);
+
+-- Создание ключей для таблицы MixtapesTracks
+alter table mixtapestracks
+add primary key (mixtape_id, track_id);
+
+alter table mixtapestracks
+add FOREIGN key(mixtape_id) references mixtapes(mixtape_id);
+
+alter table mixtapestracks
+add FOREIGN key(track_id) references tracks(track_id);

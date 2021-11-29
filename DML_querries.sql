@@ -48,15 +48,15 @@ insert into genres values(6, 'Noise Rap');
 insert into genres values(7, 'Grunge');
 
 -- Заполнение таблицы со сборниками
-insert into mixtapes values(1, 1, 1, 'Mixtape1', 2020);
-insert into mixtapes values(1, 2, 1, 'Mixtape1', 2018);
-insert into mixtapes values(2, 1, 1, 'Mixtape2', 2019);
-insert into mixtapes values(3, 3, 2, 'Mixtape3', 1996);
-insert into mixtapes values(4, 5, 2, 'Mixtape4', 1995);
-insert into mixtapes values(5, 4, 2, 'Mixtape5', 1999);
-insert into mixtapes values(6, 11, 7, 'Mixtape6', 2011);
-insert into mixtapes values(7, 13, 8, 'Mixtape7', 2020);
-insert into mixtapes values(8, 15, 9, 'Mixtape8', 2005);
+insert into mixtapes values(1, 'Mixtape1', 2020);
+insert into mixtapes values(1, 'Mixtape1', 2018);
+insert into mixtapes values(2, 'Mixtape2', 2019);
+insert into mixtapes values(3, 'Mixtape3', 1996);
+insert into mixtapes values(4, 'Mixtape4', 1995);
+insert into mixtapes values(5, 'Mixtape5', 1999);
+insert into mixtapes values(6, 'Mixtape6', 2011);
+insert into mixtapes values(7, 'Mixtape7', 2020);
+insert into mixtapes values(8, 'Mixtape8', 2005);
 
 -- Заполнение таблицы связей Артист/Альбом
 insert into artistsalbums values(1, 1);
@@ -80,6 +80,18 @@ insert into genresartists values(4, 1);
 insert into genresartists values(5, 5);
 insert into genresartists values(6, 6);
 insert into genresartists values(7, 3);
+
+
+-- Заполнение таблицы связей Сборник/Трэк
+insert into mixtapestracks values(1, 1);
+insert into mixtapestracks values(2, 1);
+insert into mixtapestracks values(1, 1);
+insert into mixtapestracks values(3, 2);
+insert into mixtapestracks values(5, 2);
+insert into mixtapestracks values(4, 2);
+insert into mixtapestracks values(11, 7);
+insert into mixtapestracks values(13, 8);
+insert into mixtapestracks values(15, 9);
 
 -- 1. название и год выхода альбомов, вышедших в 2018 году;
 select title as album_title, release_year from albums where release_year = '2018';
@@ -108,6 +120,7 @@ select title as track_title from tracks where lower(title) like '%my%' or lower(
 
 -- ***************************************************************
 -- DDL QUERIES
+-- Создание таблицы с информацией о исполнителях
 -- Создание таблицы с информацией о исполнителях
 create table if not exists artists (
 	artist_id serial primary key,
@@ -138,8 +151,6 @@ create table if not exists genres (
 -- Создание таблицы с информацией о сборниках
 create table if not exists mixtapes (
 	mixtape_id integer,
-	track_id integer,
-	album_id integer,
 	title varchar(100),
 	release_year integer
 );
@@ -154,4 +165,10 @@ create table if not exists ArtistsAlbums (
 create table if not exists GenresArtists (
 	genre_id integer,
 	artist_id integer
+);
+
+-- Создание дополнительной таблицы с информацией о Сборниках и Трэках
+create table if not exists mixtapestracks (
+	mixtape_id integer,
+	track_id integer
 );
